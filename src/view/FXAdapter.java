@@ -2,7 +2,6 @@ package view;
 import model.*;
 
 import javafx.scene.shape.Shape;
-import model.Color;
 
 /**
  * Klasse FXAdapter
@@ -24,27 +23,22 @@ public class FXAdapter {
 		Shape s = null;
 		Figure f = (Figure) iF;
 		String form = f.getForm();
-		if (form.equals("Arc"))
-			s = getShape((Arc) f);
-		else if (form.equals("Triangle"))  
-			s = getShape((Polygon) f, 3);
-		
-		else if (form.equals("Polygon"))
-			s = getShape((Polygon) f, 6);
-		else if (form.equals("Line"))
-			s = getShape((model.Line) f);
-		else if (form.equals("Ellipse"))
-			s = getShape((model.Ellipse) f);
-		else if (form.equals("Rectangle"))
-			s = getShape((model.Rectangle) f);
+        s = switch (form) {
+            case "Arc" -> getShape((Arc) f);
+            case "Triangle" -> getShape((Polygon) f, 3);
+            case "Polygon" -> getShape((Polygon) f, 6);
+            case "Line" -> getShape((Line) f);
+            case "Ellipse" -> getShape((Ellipse) f);
+            case "Rectangle" -> getShape((Rectangle) f);
+            default -> s;
+        };
 		return s;
 	}
 
 	/**
 	 * Setzen der Farben in einer Shape
-	 * 
-	 * @return Instanz von Shape
-	 */
+	 *
+     */
 	public static void setShapeColors(Figure f, Shape s) {
 		Tupel<Color> tc = f.getColors();
 		s.setFill(getFXfromRGB(tc.x));
@@ -85,8 +79,8 @@ public class FXAdapter {
 	 */
 	//@Override
 	public static Shape getShape(model.Polygon f, int nEdges) {
-		Shape s = null;
-		double points [] = new double [2*nEdges];
+		Shape s;
+		double[] points = new double [2*nEdges];
 		if (nEdges == 3) {
 			points[0] = f.getPosition().x;
 			points[1] = f.getPosition().y;
@@ -159,22 +153,21 @@ public class FXAdapter {
 	 * @param color - AWT
 	 * @return color - diese Klasse
 	 */
-	public static Color setRGBfromAWT(java.awt.Color c) {
-		return new Color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
+	public static Color setRGBfromAWT(java.awt.Color color) {
+		return new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 
 	/**
 	 * Klassenmethode Konvertierung einer FX-Color in Color
-	 * 
+	 *
 	 * @param color - FX
-	 * @return color - diese Klasse
 	 */
-	public static Color setRGBfromFX(javafx.scene.paint.Color c) {
-		int r = (int) (255.0 * c.getRed() + 0.5);
-		int g = (int) (255.0 *  c.getGreen() + 0.5);
-		int b = (int) (255.0 *  c.getBlue() + 0.5);
-		int a = (int) (255.0 *  c.getOpacity() + 0.5);
-		return new Color(r,g,b,a);
+	public static void setRGBfromFX(javafx.scene.paint.Color color) {
+		int r = (int) (255.0 * color.getRed() + 0.5);
+		int g = (int) (255.0 *  color.getGreen() + 0.5);
+		int b = (int) (255.0 *  color.getBlue() + 0.5);
+		int a = (int) (255.0 *  color.getOpacity() + 0.5);
+		new Color(r, g, b, a);
 	}
 	
 	/**
@@ -183,8 +176,8 @@ public class FXAdapter {
 	 * @param color - diese Klasse
 	 * @return color - AWT
 	 */
-	public static java.awt.Color getAWTfromRGB(Color c) {
-		return new java.awt.Color(c.getRed(), c.getGreen(), c.getBlue());
+	public static java.awt.Color getAWTfromRGB(Color color) {
+		return new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 	/**
@@ -193,8 +186,8 @@ public class FXAdapter {
 	 * @param color - diese Klasse
 	 * @return color - FX
 	 */
-	public static javafx.scene.paint.Color getFXfromRGB(Color c) {
-		return new javafx.scene.paint.Color(c.getRed() / 255.0, c.getGreen() / 255.0, c.getBlue() / 255.0, c.getAlpha() / 255.0);
+	public static javafx.scene.paint.Color getFXfromRGB(Color color) {
+		return new javafx.scene.paint.Color(color.getRed() / 255.0, color.getGreen() / 255.0, color.getBlue() / 255.0, color.getAlpha() / 255.0);
 	}
 
 	/**
@@ -203,8 +196,8 @@ public class FXAdapter {
 	 * @param color - FX
 	 * @return color - AWT
 	 */
-	public static java.awt.Color getRGBFX(javafx.scene.paint.Color c) {
-		return new java.awt.Color((float) c.getRed(), (float) c.getGreen(), (float) c.getBlue());
+	public static java.awt.Color getRGBFX(javafx.scene.paint.Color color) {
+		return new java.awt.Color((float) color.getRed(), (float) color.getGreen(), (float) color.getBlue());
 	}
 
 	/**
@@ -213,10 +206,9 @@ public class FXAdapter {
 	 * @param color - AWT
 	 * @return color - FX
 	 */
-	public static javafx.scene.paint.Color setRGBFX(java.awt.Color c) {
-		return new javafx.scene.paint.Color(c.getRed() / 255.0, c.getGreen() / 255.0, c.getBlue() / 255.0,
-				c.getAlpha() / 255.0);
+	public static javafx.scene.paint.Color setRGBFX(java.awt.Color color) {
+		return new javafx.scene.paint.Color(color.getRed() / 255.0, color.getGreen() / 255.0, color.getBlue() / 255.0,
+				color.getAlpha() / 255.0);
 	}
 
 }
-

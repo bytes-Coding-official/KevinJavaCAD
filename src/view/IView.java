@@ -10,7 +10,7 @@ package view;
 
 public interface IView {
     /**
-     * Update des Views: meist vom ViewModel aufgerufen
+     * Update des Views: vom ViewModel aufgerufen
      */
 	void update();
 }

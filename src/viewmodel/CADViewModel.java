@@ -12,11 +12,9 @@ import model.IFigure;
 
 
 public class CADViewModel extends ViewModel {
-   private MainViewModel parent = null;
-   private Drawing zeichnung = null;
-   private double width = 1100.0;
-   private double height = 700.0;
-   private CADViewModel.Edges edge = null;
+   private MainViewModel parent;
+   private Drawing zeichnung ;
+    private CADViewModel.Edges edge = null;
 
   
    public CADViewModel(Drawing zeichnung, ViewModel parent) {
@@ -33,7 +31,7 @@ public class CADViewModel extends ViewModel {
    }
 
    public void updateDrawing() {
-      ((CADView)this.view).update();
+      this.view.update();
    }
 
    public void mousePressed(MouseEvent me) {
@@ -52,18 +50,13 @@ public class CADViewModel extends ViewModel {
          Figure figure = this.parent.getSettings();
          String pname = figure.getClass().getPackageName();
          String formF = figure.getForm();
-         String form = formF;
-         IFigure f = null;
+          IFigure f = null;
 
          try {
-            f = (IFigure)Class.forName(pname + "." + form).getConstructor().newInstance();
+            f = (IFigure)Class.forName(pname + "." + formF).getConstructor().newInstance();
          } catch (Exception var9) {
             var9.printStackTrace();
          }
-         /*Figure f = this.figure.clone();
-         this.figure = this.updateFigure(f, true);
-         this.idFigure = this.parent.addFigure(f) - 1;
-         this.parent.updateDrawing(this.figure, this.idFigure);*/
           assert f != null;
           Figure fig = ((Figure) f).clone();
          try {
@@ -99,20 +92,22 @@ public class CADViewModel extends ViewModel {
          this.edge.y1 = 0.0;
       }
 
-      if (this.edge.x0 > this.width) {
-         this.edge.x0 = this.width;
+       double width = 1100.0;
+       if (this.edge.x0 > width) {
+         this.edge.x0 = width;
       }
 
-      if (this.edge.y0 > this.height) {
-         this.edge.y0 = this.height;
+       double height = 700.0;
+       if (this.edge.y0 > height) {
+         this.edge.y0 = height;
       }
 
-      if (this.edge.x1 > this.width) {
-         this.edge.x1 = this.width;
+      if (this.edge.x1 > width) {
+         this.edge.x1 = width;
       }
 
-      if (this.edge.y1 > this.height) {
-         this.edge.y1 = this.height;
+      if (this.edge.y1 > height) {
+         this.edge.y1 = height;
       }
 
       if (this.edge.x1 < this.edge.x0) {
@@ -141,7 +136,7 @@ public class CADViewModel extends ViewModel {
    }
   
 
-   private class Edges {
+   private static class Edges {
       public double x0;
       public double x1;
       public double y0;

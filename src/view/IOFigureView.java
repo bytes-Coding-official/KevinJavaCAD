@@ -23,22 +23,20 @@ import model.Figure;
 public class IOFigureView extends BorderPane implements IView {
    
 // Privat
-	
-   private IView parent = null;
-   private Stage stage = null;
-   private IOFigureViewModel vm = null;
-   private ObservableList<String> forms = FXCollections.observableArrayList("Ellipse", "Rectangle", "Polygon", "Triangle", "Line", "Arc"); 
-   private IOFigureView.LabeledText pnIndex = new IOFigureView.LabeledText("Index", "1");
-   private ComboBox<String> pnForm = new ComboBox(this.forms);
-   private IOFigureView.LabeledText pnX = new IOFigureView.LabeledText("X", "0");
-   private IOFigureView.LabeledText pnY = new IOFigureView.LabeledText("Y", "0");
-   private IOFigureView.LabeledText pnA = new IOFigureView.LabeledText("Width", "100");
-   private IOFigureView.LabeledText pnB = new IOFigureView.LabeledText("Heigth", "50");
-   private IOFigureView.LabeledText pnFC = new IOFigureView.LabeledText("FillC", Color.YELLOW);
-   private IOFigureView.LabeledText pnLC = new IOFigureView.LabeledText("LineC", Color.BLUE);
-   private IOFigureView.LabeledText pnUmfang = new IOFigureView.LabeledText("Umfang", "300", false);
-   private IOFigureView.LabeledText pnArea = new IOFigureView.LabeledText("Flaeche", "5000", false);
-   private EventHandler<ActionEvent> handler = me -> {
+
+    private IOFigureViewModel vm;
+   private final ObservableList<String> forms = FXCollections.observableArrayList("Ellipse", "Rectangle", "Polygon", "Triangle", "Line", "Arc"); 
+   private final IOFigureView.LabeledText pnIndex = new IOFigureView.LabeledText("Index", "1");
+   private final ComboBox<String> pnForm = new ComboBox<>(this.forms);
+   private final IOFigureView.LabeledText pnX = new IOFigureView.LabeledText("X", "0");
+   private final IOFigureView.LabeledText pnY = new IOFigureView.LabeledText("Y", "0");
+   private final IOFigureView.LabeledText pnA = new IOFigureView.LabeledText("Width", "100");
+   private final IOFigureView.LabeledText pnB = new IOFigureView.LabeledText("Heigth", "50");
+   private final IOFigureView.LabeledText pnFC = new IOFigureView.LabeledText("FillC", Color.YELLOW);
+   private final IOFigureView.LabeledText pnLC = new IOFigureView.LabeledText("LineC", Color.BLUE);
+   private final IOFigureView.LabeledText pnUmfang = new IOFigureView.LabeledText("Umfang", "300", false);
+   private final IOFigureView.LabeledText pnArea = new IOFigureView.LabeledText("Flaeche", "5000", false);
+   private final EventHandler<ActionEvent> handler = me -> {
        if (me.getSource() == IOFigureView.this.btnOK) {
            IOFigureView.this.vm.btnOKHandle();
        } else if (me.getSource() == IOFigureView.this.btnAdd) {
@@ -52,14 +50,12 @@ public class IOFigureView extends BorderPane implements IView {
    
 // Privat
    
-   private IOFigureView.ButtonAction btnOK = new IOFigureView.ButtonAction("Change", this.handler);
-   private IOFigureView.ButtonAction btnAdd = new IOFigureView.ButtonAction("Add", this.handler);
-   private IOFigureView.ButtonAction btnRemove = new IOFigureView.ButtonAction("Remove", this.handler);
+   private final IOFigureView.ButtonAction btnOK = new IOFigureView.ButtonAction("Change", this.handler);
+   private final IOFigureView.ButtonAction btnAdd = new IOFigureView.ButtonAction("Add", this.handler);
+   private final IOFigureView.ButtonAction btnRemove = new IOFigureView.ButtonAction("Remove", this.handler);
 
    public IOFigureView(ViewModel vm, IView parent, Stage stage) {
-      this.parent = parent;
-      this.stage = stage;
-      this.vm = (IOFigureViewModel)vm;
+       this.vm = (IOFigureViewModel)vm;
       vm.registerView(this);
       this.pnForm.setPrefWidth(150.0);
       this.pnForm.setPrefHeight(50.0);
@@ -108,7 +104,7 @@ public class IOFigureView extends BorderPane implements IView {
 
    public void updateIOFigure(Figure figure, int id) {
       if (figure != null) {
-         this.pnIndex.setTextField((double)id);
+         this.pnIndex.setTextField(id);
          this.pnForm.getSelectionModel().select(figure.getForm());
          this.pnX.setTextField(figure.getPosition().x);
          this.pnY.setTextField(figure.getPosition().y);
@@ -132,11 +128,11 @@ public class IOFigureView extends BorderPane implements IView {
    }
 
    public String getForm() {
-	      return (String)this.pnForm.getSelectionModel().getSelectedItem();
+	      return this.pnForm.getSelectionModel().getSelectedItem();
 	   }
    
    public Figure getSettings(Figure fig) {
-      fig.setForm((String)this.pnForm.getSelectionModel().getSelectedItem());
+      fig.setForm(this.pnForm.getSelectionModel().getSelectedItem());
       fig.setPosition(this.pnX.getTextField(), this.pnY.getTextField());
       fig.setSize(this.pnA.getTextField(), this.pnB.getTextField());
     //  fig.setColors(ColorDOM.setRGBfromFX(this.pnFC.getColor()), ColorDOM.setRGBfromFX(this.pnLC.getColor()));
@@ -159,7 +155,7 @@ public class IOFigureView extends BorderPane implements IView {
    
    
 
-   private class LabeledText extends BorderPane {
+   private static class LabeledText extends BorderPane {
       private Label lbl = null;
       private TextField txt = null;
       private final ColorPicker cp = new ColorPicker();

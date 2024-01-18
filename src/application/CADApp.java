@@ -8,17 +8,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CADApp extends Application {
-   private MainView viewMain = null;
-   private MainViewModel vmMain = null;
 
-   @Override
+    @Override
    public void start(Stage primaryStage) {
       try {
          BorderPane root = new BorderPane();
          Scene scene = new Scene(root, 1300.0, 700.0);
-         this.vmMain = new MainViewModel();
-         this.viewMain = new MainView(this.vmMain, this, primaryStage);
-         root.setCenter(this.viewMain);
+          MainViewModel vmMain = new MainViewModel();
+          MainView viewMain = new MainView(vmMain, this, primaryStage);
+         root.setCenter(viewMain);
          primaryStage.setScene(scene);
          primaryStage.setTitle("CADApp V.: LE 12, A.: Kevin Schallmo");
          primaryStage.show();

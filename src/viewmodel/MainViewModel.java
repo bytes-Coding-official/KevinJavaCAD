@@ -3,15 +3,12 @@ package viewmodel;
 import view.MainView;
 import model.*; 
 import java.io.File;
-import model.Drawing;
-import model.DrawingDOM;
-import model.Figure;
 
 public class MainViewModel extends ViewModel {
-   private IOFigureViewModel vmIOFigure = null;
-   private CADViewModel vmCAD = null;
-   private Drawing zeichnung = null;
-   private Figure figure = null;
+   private IOFigureViewModel vmIOFigure;
+   private CADViewModel vmCAD;
+   private Drawing zeichnung;
+   private Figure figure;
    private int idFigure = 0;
 
    public MainViewModel() {
@@ -79,14 +76,19 @@ public class MainViewModel extends ViewModel {
     *          Remove
     ******************************/ 
    public Figure removeFigure(Figure f) {
-      return this.zeichnung.remove(getFigureID()) ? (Figure)this.zeichnung.get(0) : f;
+      try {
+         return this.zeichnung.remove(getFigureID()) ? (Figure)this.zeichnung.get(0) : f;
+      } catch (Exception e) {
+        return null;
+      }
+     
    }
    
    
    
 
    public void updateDrawing() {
-      ((MainView)this.view).update();
+      this.view.update();
       System.out.println();
       System.out.println(this.zeichnung);
    }
@@ -118,9 +120,10 @@ public class MainViewModel extends ViewModel {
 
    public void openDrawing(File file) {
       String path = file.getPath();
-      if (path.substring(path.length() - 3).contentEquals("ser")) {
+      var subpath = path.substring(path.length() - 3);
+      if (subpath.contentEquals("ser")) {
          this.zeichnung = DrawingDOM.readFromObjectStream(path);
-      } else if (path.substring(path.length() - 3).contentEquals("xml")) {
+      } else if (subpath.contentEquals("xml")) {
          this.zeichnung = DrawingDOM.readXMLDecoder(path);
       } else {
          this.zeichnung = DrawingDOM.readXMLDOM(path);
@@ -134,9 +137,10 @@ public class MainViewModel extends ViewModel {
 
    public void saveDrawing(File file) {
       String path = file.getPath();
-      if (path.substring(path.length() - 3).contentEquals("ser")) {
+      var subpath = path.substring(path.length() - 3);
+      if (subpath.contentEquals("ser")) {
          DrawingDOM.writeToObjectStream(this.zeichnung, path);
-      } else if (path.substring(path.length() - 3).contentEquals("xml")) {
+      } else if (subpath.contentEquals("xml")) {
          DrawingDOM.writeXMLEncoder(this.zeichnung, path);
       } else {
          DrawingDOM.writeXMLDOM(this.zeichnung, path);

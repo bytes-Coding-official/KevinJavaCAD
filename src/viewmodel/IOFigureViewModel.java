@@ -1,18 +1,16 @@
 package viewmodel;
 
+import model.Color;
+import model.Figure;
+import model.Rectangle;
 import view.IOFigureView;
 
 
-import javafx.event.Event;
 import javafx.stage.Stage;
-import model.Color;
-import model.Figure;
-import model.*;
-import model.Rectangle;
 
 public class IOFigureViewModel extends ViewModel {
-    private MainViewModel parent;
-    private Stage stage = null;
+    private final MainViewModel parent;
+    private  Stage stage;
     private Figure figure;
     private int idFigure;
     private final Figure defaultFigure = new Rectangle(0.0, 0.0, 100.0, 50.0, Color.WHITE, Color.RED);
@@ -91,21 +89,23 @@ public class IOFigureViewModel extends ViewModel {
                 this.figure = f;
             }
         } else {
-            Figure f = this.updateFigure(this.figure, false);
-            this.figure = f;
+            this.figure = this.updateFigure(this.figure, false);
         }
 
         this.parent.updateDrawing(this.figure, this.idFigure);
     }
 
     public Figure updateFigure(Figure figure, boolean create) {
+
+        if(figure == null)
+            return null;
+
         Figure fig = figure;
         String pname = figure.getClass().getPackageName();
         String formF = ((IOFigureView) this.view).getForm();
-        String form = formF;
         if (create || !formF.equals(figure.getForm())) {
             try {
-                fig = (Figure) Class.forName(pname + "." + form).getConstructor().newInstance();
+                fig = (Figure) Class.forName(pname + "." + formF).getConstructor().newInstance();
             } catch (Exception var8) {
                 var8.printStackTrace();
             }
@@ -122,6 +122,8 @@ public class IOFigureViewModel extends ViewModel {
     }
 
     public void btnAddHandle() {
+        if (figure == null)
+            return;
         Figure f = this.figure.clone();
         this.figure = this.updateFigure(f, true);
         this.idFigure = this.parent.addFigure(f) - 1;

@@ -14,17 +14,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainView extends BorderPane implements IView {
-   private Application parent = null;
-   private Stage stage = null;
-   private MainViewModel vm = null;
-   private IOFigureView viewIOFigure = null;
-   private CADView viewCAD = null;
-   private MainView.FilePane filePane = null;
+    private Stage stage;
+   private MainViewModel vm;
+   private IOFigureView viewIOFigure;
+   private CADView viewCAD;
+   private MainView.FilePane filePane;
 
    public MainView(MainViewModel vm, Application parent, Stage stage) {
       try {
-         this.parent = parent;
-         this.stage = stage;
+          this.stage = stage;
          this.vm = vm;
          vm.registerView(this);
          this.viewCAD = new CADView(vm.getCADVM(), this);
@@ -55,18 +53,16 @@ public class MainView extends BorderPane implements IView {
 
    private class FilePane extends HBox {
       private final FileChooser fileChooser = new FileChooser();
-      private EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
-         public void handle(ActionEvent me) {
-            if (me.getSource() == FilePane.this.btnLoad) {
-               FilePane.this.btnLoadHandle(me);
-            } else if (me.getSource() == FilePane.this.btnSave) {
-               FilePane.this.btnSaveHandle(me);
-            }
+      private final EventHandler<ActionEvent> handler = me -> {
+          if (me.getSource() == FilePane.this.btnLoad) {
+              FilePane.this.btnLoadHandle(me);
+          } else if (me.getSource() == FilePane.this.btnSave) {
+              FilePane.this.btnSaveHandle(me);
+          }
 
-         }
       };
-      private IOFigureView.ButtonAction btnLoad = new IOFigureView.ButtonAction("Load", this.handler);
-      private IOFigureView.ButtonAction btnSave = new IOFigureView.ButtonAction("Save", this.handler);
+      private final IOFigureView.ButtonAction btnLoad = new IOFigureView.ButtonAction("Load", this.handler);
+      private final IOFigureView.ButtonAction btnSave = new IOFigureView.ButtonAction("Save", this.handler);
 
       public FilePane() {
          this.fileChooser
