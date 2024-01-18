@@ -14,7 +14,7 @@ import model.IFigure;
 public class CADViewModel extends ViewModel {
    private MainViewModel parent;
    private Drawing zeichnung ;
-    private CADViewModel.Edges edge = null;
+    private CADViewModel.Edges edge;
 
   
    public CADViewModel(Drawing zeichnung, ViewModel parent) {
