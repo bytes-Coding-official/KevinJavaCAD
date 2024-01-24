@@ -1,7 +1,5 @@
 package view;
 
-import viewmodel.MainViewModel;
-import java.io.File;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -12,6 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import viewmodel.MainViewModel;
+
+import java.io.File;
 
 public class MainView extends BorderPane implements IView {
     private Stage stage;

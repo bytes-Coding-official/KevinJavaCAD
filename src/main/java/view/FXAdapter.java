@@ -1,7 +1,7 @@
 package view;
-import model.*;
 
 import javafx.scene.shape.Shape;
+import model.*;
 
 /**
  * Klasse FXAdapter

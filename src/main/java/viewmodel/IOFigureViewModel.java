@@ -1,12 +1,10 @@
 package viewmodel;
 
+import javafx.stage.Stage;
 import model.Color;
 import model.Figure;
 import model.Rectangle;
 import view.IOFigureView;
-
-
-import javafx.stage.Stage;
 
 public class IOFigureViewModel extends ViewModel {
     private final MainViewModel parent;

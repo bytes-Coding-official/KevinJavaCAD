@@ -1,12 +1,12 @@
 package viewmodel;
 
-import view.MainView;
-import model.*; 
+import model.*;
+
 import java.io.File;
 
 public class MainViewModel extends ViewModel {
-   private IOFigureViewModel vmIOFigure;
-   private CADViewModel vmCAD;
+   private final IOFigureViewModel vmIOFigure;
+   private final CADViewModel vmCAD;
    private Drawing zeichnung;
    private Figure figure;
    private int idFigure = 0;

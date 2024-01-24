@@ -1,9 +1,7 @@
 package viewmodel;
 
-import model.Color;
-import view.CADView;
-
 import javafx.scene.input.MouseEvent;
+import model.Color;
 import model.Drawing;
 import model.Figure;
 import model.IFigure;
@@ -12,7 +10,7 @@ import model.IFigure;
 
 
 public class CADViewModel extends ViewModel {
-   private MainViewModel parent;
+   private final MainViewModel parent;
    private Drawing zeichnung ;
     private CADViewModel.Edges edge;
 

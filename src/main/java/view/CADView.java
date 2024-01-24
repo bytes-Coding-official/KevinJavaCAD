@@ -10,7 +10,7 @@ import viewmodel.CADViewModel;
 import viewmodel.ViewModel;
 
 public class CADView extends Group implements IView {
-    private CADViewModel vm;
+    private final CADViewModel vm;
    private final Pane pane = new Pane();
 
     public CADView(ViewModel vm, IView parent) {
